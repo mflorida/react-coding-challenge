@@ -41,9 +41,9 @@ export function MessageList() {
     <div className={'message-list'}>
       <MessageListHeader clearAll={clearAll} {...{isStarted, setStarted}} />
       <div className={'message-columns m-0-auto flex justify-between'} style={colsStyle}>
-        <MessageColumn messageType={'error'} messages={errorMsgs} />
-        <MessageColumn messageType={'warning'} messages={warningMsgs} />
-        <MessageColumn messageType={'error'} messages={infoMsgs} />
+        <MessageColumn type={'error'} messages={errorMsgs} />
+        <MessageColumn type={'warning'} messages={warningMsgs} />
+        <MessageColumn type={'info'} messages={infoMsgs} />
       </div>
     </div>
   );

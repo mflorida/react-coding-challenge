@@ -1,0 +1,13 @@
+.message-column {
+  padding: 0 8px;
+}
+
+.message-column h2 {
+  margin: 0 0 8px;
+  font-weight: normal;
+}
+
+.message-column h3 {
+  margin: 0 0 12px;
+  font-weight: normal;
+}
