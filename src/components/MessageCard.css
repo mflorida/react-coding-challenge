@@ -1,0 +1,23 @@
+.message-card {
+  margin: 8px;
+}
+
+.message-card .message-text {
+  width: 80%;
+}
+
+.message-card .clear-message {
+  width: 20%;
+}
+
+.error-message {
+  background-color: #f56236;
+}
+
+.warning-message {
+  background-color: #fce788;
+}
+
+.info-message {
+  background-color: #88fca3;
+}
