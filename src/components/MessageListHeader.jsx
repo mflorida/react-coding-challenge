@@ -2,11 +2,7 @@ import React from 'react';
 
 import './MessageListHeader.css';
 
-export function MessageListHeader({ isStarted, setStarted, clearAll }) {
-  const toggleStart = (e) => {
-    console.log(e.target);
-    setStarted(prev => !prev);
-  };
+export function MessageListHeader({ isStarted, toggleStart, clearAll }) {
   const style = {
     margin: '24px auto 36px',
   };
