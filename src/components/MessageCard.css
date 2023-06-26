@@ -1,6 +1,7 @@
 .message-card {
   margin: 6px 0;
   padding: 12px 16px;
+  background-color: var(--card-bg-color);
 }
 
 .message-card .message-text {
@@ -18,14 +19,14 @@
   box-shadow: 0 0 1px hsla(0, 0%, 0%, 0.05);
 }
 
-.error-message {
-  background-color: #f56236;
-}
+/*.error-message {*/
+/*  background-color: #f56236;*/
+/*}*/
 
-.warning-message {
-  background-color: #fce788;
-}
+/*.warning-message {*/
+/*  background-color: #fce788;*/
+/*}*/
 
-.info-message {
-  background-color: #88fca3;
-}
+/*.info-message {*/
+/*  background-color: #88fca3;*/
+/*}*/

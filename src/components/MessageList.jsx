@@ -8,20 +8,6 @@ import './MessageList.css';
 // Bring in fake data to get columns rendering
 import { getMockData } from '../data/getMockData';
 
-// const messageTypes = [
-//   'message',
-//   'error',
-//   'warning',
-//   'info',
-// ];
-
-// const messageColors = {
-//   error: '#f56236',
-//   warning: '#fce788',
-//   info: '#88fca3',
-// };
-
-
 // Prefer named exports
 export function MessageList() {
   const [isStarted, setStarted] = useState(true)

@@ -14,10 +14,16 @@ export function MessageColumn(props) {
   const {
     label,
     priority,
+    color
   } = messageTypes[type]
 
+  // Set css variable for cards' background in this column
+  const style = {
+    '--card-bg-color': color
+  }
+
   return (
-    <section className={'message-column w-full flex-col'}>
+    <section className={'message-column w-full flex-col'} style={style}>
       <header>
         <h2>{label} Type {priority}</h2>
         <h3>Count {messages.length}</h3>
