@@ -1,0 +1,11 @@
+.message-list-header button {
+  width: 100px;
+  margin: 8px;
+  padding: 12px 0;
+  background-color: #00ead5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
