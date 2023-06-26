@@ -1,13 +1,21 @@
 .message-card {
-  margin: 8px;
+  margin: 6px 8px;
+  padding: 12px 16px;
 }
 
 .message-card .message-text {
-  width: 80%;
+  width: 75%;
 }
 
 .message-card .clear-message {
   width: 20%;
+}
+
+.message-card .clear-message button {
+  padding: 8px 12px;
+  background-color: hsla(0, 0%, 80%, 0.2);
+  border: none;
+  box-shadow: 0 0 1px hsla(0, 0%, 0%, 0.05);
 }
 
 .error-message {
