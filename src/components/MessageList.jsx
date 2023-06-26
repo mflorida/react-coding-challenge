@@ -1,24 +1,12 @@
 import React, { useState } from 'react';
 // import MessageGenerator from '../api';
-
-// Bring in fake data to get columns rendering
-import { getMockData } from '../data/getMockData';
-import MessageCard from './MessageCard';
+import MessageListHeader from './MessageListHeader';
+import MessageColumn from './MessageColumn';
 
 import './MessageList.css';
 
-function MessageListHeader({ isStarted, setStarted, clearAll }) {
-  const toggleStart = (e) => {
-    console.log(e.target);
-    setStarted(prev => !prev);
-  };
-  return (
-    <div className={'message-list-header flex justify-center'}>
-      <button type={'button'} onClick={toggleStart}>{isStarted ? 'Stop' : 'Start'}</button>
-      <button type={'button'} onClick={clearAll}>Clear</button>
-    </div>
-  );
-}
+// Bring in fake data to get columns rendering
+import { getMockData } from '../data/getMockData';
 
 // const messageTypes = [
 //   'message',
@@ -33,22 +21,6 @@ function MessageListHeader({ isStarted, setStarted, clearAll }) {
 //   info: '#88fca3',
 // };
 
-function MessageColumn(props) {
-  // Destructure multilple props inside function body for readability
-  const {
-    messages = [{ id: '', message: '', priority: 0, type: '' }],
-  } = props;
-
-  // const colStyle = {
-  //   grid
-  // }
-
-  return (
-    <section className={'w-full flex-col'}>
-      {messages.map(msg => <MessageCard key={msg.id} message={msg} />)}
-    </section>
-  );
-}
 
 // Prefer named exports
 export function MessageList() {
