@@ -36,14 +36,14 @@ export function MessageList() {
     },
   }));
 
-  const [isStarted, setStarted] = useState(messageGenerator.isStarted());
-
   useEffect(() => {
     messageGenerator.start();
     return () => {
       messageGenerator.stop();
     };
   }, [messageGenerator]);
+
+  const [isStarted, setStarted] = useState(messageGenerator.isStarted());
 
   const toggleStart = (e) => {
     console.log('toggler');

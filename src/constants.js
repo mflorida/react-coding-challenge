@@ -1,41 +1,59 @@
 export const messageTypes = {
-  none: {
+  0: {
     type: 'none',
     priority: 0,
     label: 'None',
-    color: '#505050'
+    color: '#505050',
   },
-  error: {
+  1: {
     type: 'error',
     priority: 1,
     label: 'Error',
-    color: '#f56236'
+    color: '#f56236',
   },
-  warning: {
+  2: {
     type: 'warning',
     priority: 2,
     label: 'Warning',
-    color: '#fce788'
+    color: '#fce788',
   },
-  info: {
+  3: {
     type: 'info',
     priority: 3,
     label: 'Info',
-    color: '#88fca3'
+    color: '#88fca3',
   },
 };
 
-// Indexes line up with priority values
-export const messageTypeList = [
-  'none', // filler since there is no '0' priority
-  'error',
-  'warning',
-  'info',
-];
-
+// Map key matches priority
 export const messageTypeMap = new Map([
-  ['none', {}],
-  ['error', messageTypes.error],
-  ['warning', messageTypes.warning],
-  ['info', messageTypes.info],
+  [0, {
+    type: 'none',
+    priority: 0,
+    label: 'None',
+    color: '#505050',
+  }],
+  [1, {
+    type: 'error',
+    priority: 1,
+    label: 'Error',
+    color: '#f56236',
+  }],
+  [2, {
+    type: 'warning',
+    priority: 2,
+    label: 'Warning',
+    color: '#fce788',
+  }],
+  [3, {
+    type: 'info',
+    priority: 3,
+    label: 'Info',
+    color: '#88fca3',
+  }],
 ]);
+
+// Indexes line up with priority values
+export const messageTypeList = [...messageTypeMap.values()].map(o => o.type);
+
+console.log('messageTypeList', messageTypeList);

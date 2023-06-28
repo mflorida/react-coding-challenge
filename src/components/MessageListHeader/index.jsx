@@ -7,7 +7,9 @@ export function MessageListHeader({ isStarted, toggleStart, clearAll }) {
   };
   return (
     <div className={'message-list-header flex justify-center'} style={style}>
-      <button className={button} type={'button'} onClick={toggleStart}>{isStarted ? 'Stop' : 'Start'}</button>
+      <button className={button} type={'button'} onClick={toggleStart}>
+          {isStarted ? 'Stop' : 'Start'}
+      </button>
       <button className={button} type={'button'} onClick={clearAll}>Clear</button>
     </div>
   );

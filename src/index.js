@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import MessageList from './components/message-list-class';
-import { MessageList } from './components/MessageList';
+import MessageList from './components/MessageListFC';
+// import { MessageList } from './components/MessageList';
 
 import './global.css';
 
