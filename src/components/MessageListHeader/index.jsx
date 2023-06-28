@@ -1,6 +1,5 @@
 import React from 'react';
-
-import './MessageListHeader.css';
+import { button } from './style.module.css';
 
 export function MessageListHeader({ isStarted, toggleStart, clearAll }) {
   const style = {
@@ -8,8 +7,8 @@ export function MessageListHeader({ isStarted, toggleStart, clearAll }) {
   };
   return (
     <div className={'message-list-header flex justify-center'} style={style}>
-      <button type={'button'} onClick={toggleStart}>{isStarted ? 'Stop' : 'Start'}</button>
-      <button type={'button'} onClick={clearAll}>Clear</button>
+      <button className={button} type={'button'} onClick={toggleStart}>{isStarted ? 'Stop' : 'Start'}</button>
+      <button className={button} type={'button'} onClick={clearAll}>Clear</button>
     </div>
   );
 }

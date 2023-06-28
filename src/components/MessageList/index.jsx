@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import MessageGenerator from '../api';
-import { messageTypeList } from '../constants';
-import MessageListHeader from './MessageListHeader';
-import MessageColumn from './MessageColumn';
+import MessageGenerator from '../../api';
+import { messageTypeList } from '../../constants';
+import MessageListHeader from '../MessageListHeader';
+import MessageColumn from '../MessageColumn';
 
 // Prefer named exports
 export function MessageList() {
@@ -18,13 +18,10 @@ export function MessageList() {
   ];
 
   function clearAll() {
-    // messageSetters.forEach(fn => fn(() => []));
-    setErrorMsgs(() => []);
-    setWarningMsgs(() => []);
-    setInfoMsgs(() => []);
+    messageSetters.forEach(setter => setter([]))
   }
 
-  const messageGenerator = new MessageGenerator({
+  const [messageGenerator] = useState(new MessageGenerator({
     messageCallback: (data) => {
       // add 'type' property
       const message = {
@@ -36,21 +33,17 @@ export function MessageList() {
         message,
         ...prevMessages,
       ]);
-
     },
-  });
+  }));
 
-  const [isStarted, setStarted] = useState(false);
+  const [isStarted, setStarted] = useState(messageGenerator.isStarted());
 
   useEffect(() => {
     messageGenerator.start();
-    setStarted(messageGenerator.isStarted());
     return () => {
       messageGenerator.stop();
-      setStarted(messageGenerator.isStarted());
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [messageGenerator]);
 
   const toggleStart = (e) => {
     console.log('toggler');
