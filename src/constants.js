@@ -1,3 +1,6 @@
+// Use to check for #devmode url hash (to suppress console messages)
+export const devmode = () => /devmode/i.test(window.location.hash);
+
 export const messageTypes = {
   none: {
     type: 'none',
