@@ -75,8 +75,8 @@ export const messageStoreMap = new Map([
   }],
   [4, {
     priority: 4,
-    type: 'message',
-    label: 'Message',
+    type: 'other',
+    label: 'Other',
     color: '#d0d0d0',
     messages: [],
     setMessages: nope,
