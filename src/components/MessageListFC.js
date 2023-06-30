@@ -13,7 +13,7 @@ export function MessageListFC() {
   // const [messages, setMessages] = useState([]);
   const generator = useGenerator(messageStore);
 
-  console.log(generator.messages);
+  console.log({...generator.messages});
 
   // useEffect(() => {
   //   console.log(generator.messages);
