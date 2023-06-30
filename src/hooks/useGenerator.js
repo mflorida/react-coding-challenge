@@ -1,5 +1,5 @@
 import MessageGenerator from '../api';
-import { messageTypes } from '../constants';
+import { getMessageType } from '../constants';
 
 class ExtendedGenerator extends MessageGenerator {
   // constructor() {
@@ -13,7 +13,7 @@ class ExtendedGenerator extends MessageGenerator {
   };
 
   addMessage(message) {
-    const type = messageTypes[message.priority].type;
+    const type = getMessageType(message.priority);
     return (
       this.messages[type] = [
         message,
@@ -23,7 +23,7 @@ class ExtendedGenerator extends MessageGenerator {
   }
 
   setMessages(type){
-    
+
   }
 
   getMessages(type) {
@@ -35,13 +35,14 @@ class ExtendedGenerator extends MessageGenerator {
 
 }
 
+// Create single instance outside of hook for reuse
 const messageGenerator = new ExtendedGenerator({});
 
 export function useGenerator(updaters, tick) {
   // console.log('useGenerator');
   messageGenerator.messageCallback = (message) => {
     // console.log('messageCallback', message);
-    const type = messageTypes[message.priority].type;
+    const type = getMessageType(message.priority);
 
     const [messages, setMessages] = updaters[type];
     setMessages(messageGenerator.addMessage(message));
