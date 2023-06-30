@@ -12,7 +12,7 @@ export function MessageCard({ message, clear, id }) {
           data-id={id}
           onClick={clear}
         >
-          clear
+          <span>&times;</span>
         </button>
       </h5>
     </div>
