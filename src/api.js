@@ -6,6 +6,7 @@ import random from 'lodash.random';
  */
 class MessageGenerator {
   constructor(options) {
+    console.log('MessageGenerator');
     this.messageCallback = options.messageCallback;
     this.stopGeneration = false;
     this.chance = new Chance();
@@ -31,15 +32,19 @@ class MessageGenerator {
   /**
    * priority from 1 to 3, 1 = error, 2 = warning, 3 = info
    */
-  generate() {
+  async generate() {
     if (this.isStopped()) {
       clearTimeout(this.generator);
       return;
     }
-    const message = this.chance.sentence({ words: random(3, 12) });
+    // const message = this.chance.sentence({ words: random(3, 12) });
+    const message = (
+      await (
+        await fetch(`http://hipsum.co/api/?type=hipster-centric&sentences=1`)
+      ).json()
+    )[0];
     const id = this.chance.guid();
     const priority = random(1, 4);
-    const next = random(1, 4);
     this.messageCallback({
       message,
       priority,
@@ -48,7 +53,7 @@ class MessageGenerator {
     this.generator = setTimeout(() => {
       console.log('generating…')
       this.generate();
-    }, next * 1000);
+    }, random(1, 6) * 500);
   }
 }
 
