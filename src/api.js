@@ -24,25 +24,31 @@ class MessageGenerator {
     return !this.stopGeneration;
   }
 
+  isStopped() {
+    return this.stopGeneration;
+  }
+
   /**
    * priority from 1 to 3, 1 = error, 2 = warning, 3 = info
    */
   generate() {
-    if (this.stopGeneration) {
+    if (this.isStopped()) {
+      clearTimeout(this.generator);
       return;
     }
     const message = this.chance.sentence({ words: random(3, 12) });
     const id = this.chance.guid();
-    const priority = random(1, 3);
-    const nextInMS = random(500, 3000);
+    const priority = random(1, 4);
+    const next = random(1, 4);
     this.messageCallback({
       message,
       priority,
       id,
     });
-    setTimeout(() => {
+    this.generator = setTimeout(() => {
+      console.log('generating…')
       this.generate();
-    }, nextInMS);
+    }, next * 1000);
   }
 }
 
