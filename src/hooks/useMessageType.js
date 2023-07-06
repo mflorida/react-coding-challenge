@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { devmode } from '../constants';
 
 // Track message types to re-use
-const messageTypeMap = new Map();
+export const messageTypeMap = new Map();
 
 // Add state management to a message type
-export function useMessageType(priority, obj) {
+export function useMessageType(obj) {
+  const priority = obj.priority;
   const messageType = messageTypeMap.get(priority) || obj;
 
   const prevState = messageType.state;

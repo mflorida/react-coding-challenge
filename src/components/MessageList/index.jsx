@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import MessageGenerator from '../../api-alt';
+import { devmode } from '../../constants';
 import MessageListHeader from '../MessageListHeader';
 import MessageColumn from '../MessageColumn';
-import useMessageType from '../../hooks/useMessageType';
-import { devmode } from '../../constants';
+import { messageTypeMap, useMessageType } from '../../hooks/useMessageType';
 
 const messageGenerator = new MessageGenerator({});
 
 // Prefer named exports
 export function MessageList() {
 
-  const errorMessages = useMessageType(1, {
+  const errorMessages = useMessageType({
     priority: 1,
     type: 'error',
     label: 'Error',
     color: '#f56236',
   });
 
-  const warningMessages = useMessageType(2, {
+  const warningMessages = useMessageType({
     priority: 2,
     type: 'warning',
     label: 'Warning',
     color: '#fce788',
   });
 
-  const infoMessages = useMessageType(3, {
+  const infoMessages = useMessageType({
     priority: 3,
     type: 'info',
     label: 'Info',
@@ -32,41 +32,17 @@ export function MessageList() {
   });
 
   function clearAll() {
-    errorMessages.setState([]);
-    warningMessages.setState([]);
-    infoMessages.setState([]);
+    messageTypeMap.forEach(messageType => messageType.setState([]));
   }
 
   messageGenerator.messageCallback = (data) => {
     devmode(() => console.log('messageCallback'));
-
     const priority = data.priority;
-
-    if (priority === 1) {
-      errorMessages.setState(prevMessages => [
-        { ...data, type: 'error' },
-        ...prevMessages
-      ]);
-      return;
-    }
-
-    if (priority === 2) {
-      warningMessages.setState(prevMessages => [
-        { ...data, type: 'warning' },
-        ...prevMessages
-      ]);
-      return;
-    }
-
-    if (priority === 3) {
-      infoMessages.setState(prevMessages => [
-        { ...data, type: 'info' },
-        ...prevMessages
-      ]);
-      return;
-    }
-
-    return null;
+    const messageType = messageTypeMap.get(priority);
+    messageType.setState(prevMessages => [
+      { ...data, type: messageType.type },
+      ...prevMessages
+    ]);
   };
 
   const [isStarted, setStarted] = useState(true);
