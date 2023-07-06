@@ -2,12 +2,22 @@
   padding: 0 8px;
 }
 
+.message-column header {
+  height: 120px;
+  margin-bottom: 12px;
+  padding: 16px 24px 4px;
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.8);
+  background: slategray;
+  color: white;
+  letter-spacing: 0.12em;
+}
+
 .message-column h2 {
   margin: 0 0 8px;
-  font-weight: normal;
+  font-weight: 200;
 }
 
 .message-column h3 {
   margin: 0 0 12px;
-  font-weight: normal;
+  font-weight: 200;
 }
