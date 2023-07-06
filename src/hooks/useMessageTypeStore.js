@@ -5,21 +5,21 @@ export const messageTypeStore = new Map();
 
 export function useMessageTypeStore() {
   const [messageTypes] = useState([
-    useMessageType(1, messageTypeStore.get(1) || {
+    useMessageType(1, {
       priority: 1,
       type: 'error',
       label: 'Error',
       color: '#f56236',
     }),
 
-    useMessageType(2, messageTypeStore.get(2) || {
+    useMessageType(2, {
       priority: 2,
       type: 'warning',
       label: 'Warning',
       color: '#fce788',
     }),
 
-    useMessageType(3, messageTypeStore.get(3) || {
+    useMessageType(3, {
       priority: 3,
       type: 'info',
       label: 'Info',
