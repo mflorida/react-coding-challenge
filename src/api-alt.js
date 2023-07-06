@@ -52,7 +52,7 @@ class MessageGenerator {
     });
 
     this.generator = setTimeout(() => {
-      devmode(() => console.log('[generating]'));
+      devmode(() => console.log('[ generating ]'));
       this.generate(next);
     }, timeout || 1);
   }

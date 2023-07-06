@@ -1,31 +1,73 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MessageGenerator from '../../api-alt';
-import { messageTypeStore, useMessageTypeStore } from '../../hooks/useMessageTypeStore';
 import MessageListHeader from '../MessageListHeader';
 import MessageColumn from '../MessageColumn';
+import useMessageType from '../../hooks/useMessageType';
+import { devmode } from '../../constants';
 
 const messageGenerator = new MessageGenerator({});
 
 // Prefer named exports
 export function MessageList() {
-  const [messageTypes] = useMessageTypeStore();
+
+  const errorMessages = useMessageType(1, {
+    priority: 1,
+    type: 'error',
+    label: 'Error',
+    color: '#f56236',
+  });
+
+  const warningMessages = useMessageType(2, {
+    priority: 2,
+    type: 'warning',
+    label: 'Warning',
+    color: '#fce788',
+  });
+
+  const infoMessages = useMessageType(3, {
+    priority: 3,
+    type: 'info',
+    label: 'Info',
+    color: '#88fca3',
+  });
 
   function clearAll() {
-    messageTypeStore.forEach(messageType => messageType.setState([]));
+    errorMessages.setState([]);
+    warningMessages.setState([]);
+    infoMessages.setState([]);
   }
 
-  messageGenerator.messageCallback = useCallback((data) => {
+  messageGenerator.messageCallback = (data) => {
+    devmode(() => console.log('messageCallback'));
+
     const priority = data.priority;
-    // add 'type' property when storing the message data
-    const message = {
-      ...data,
-      type: messageTypeStore.get(priority).type,
-    };
-    messageTypeStore.get(priority).setState(prevMessages => [
-      message,
-      ...prevMessages,
-    ]);
-  }, []);
+
+    if (priority === 1) {
+      errorMessages.setState(prevMessages => [
+        { ...data, type: 'error' },
+        ...prevMessages
+      ]);
+      return;
+    }
+
+    if (priority === 2) {
+      warningMessages.setState(prevMessages => [
+        { ...data, type: 'warning' },
+        ...prevMessages
+      ]);
+      return;
+    }
+
+    if (priority === 3) {
+      infoMessages.setState(prevMessages => [
+        { ...data, type: 'info' },
+        ...prevMessages
+      ]);
+      return;
+    }
+
+    return null;
+  };
 
   const [isStarted, setStarted] = useState(true);
 
@@ -53,9 +95,9 @@ export function MessageList() {
     <div className={'message-list'}>
       <MessageListHeader {...{ clearAll, isStarted, toggleStart }} />
       <div className={'m-0-auto flex justify-between'} style={colsStyle}>
-        {messageTypes.map(messageType => (
-          <MessageColumn key={messageType.type} priority={messageType.priority} />
-        ))}
+        <MessageColumn key={'error'} messageType={errorMessages} />
+        <MessageColumn key={'warning'} messageType={warningMessages} />
+        <MessageColumn key={'info'} messageType={infoMessages} />
       </div>
     </div>
   );

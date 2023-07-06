@@ -1,13 +1,14 @@
 import React, { useCallback, useRef } from 'react';
-import { messageTypeStore } from '../../hooks/useMessageTypeStore';
 import MessageCard from '../MessageCard';
 import './style.css';
 
 // Duration in ms for animations/transitions
 const DURATION = 100;
 
-export function MessageColumn({ priority }) {
-  const messageType = useRef(messageTypeStore.get(priority)).current;
+export function MessageColumn({ messageType: obj }) {
+
+  // Is this necessary?
+  const messageType = useRef(obj).current;
 
   // Set css variables for card background and animation duration
   const style = {
@@ -34,7 +35,7 @@ export function MessageColumn({ priority }) {
   return (
     <section className={'message-column w-full flex-col'} style={style}>
       <header className={'rounded-sm flex-col justify-between'}>
-        <h2>{messageType.label}: <small><i>type {priority}</i></small></h2>
+        <h2>{messageType.label}: <small><i>type {messageType.priority}</i></small></h2>
         <h3 className={'flex items-center justify-between'}>
           <small>Count: {messageType.state.length}</small>
           <button type={'button'} onClick={clearColumn} style={{ padding: '6px 12px' }}>

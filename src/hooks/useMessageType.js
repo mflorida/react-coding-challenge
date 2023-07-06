@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { devmode } from '../constants';
-import { messageTypeStore } from './useMessageTypeStore';
+
+// Track message types to re-use
+const messageTypeMap = new Map();
 
 // Add state management to a message type
 export function useMessageType(priority, obj) {
-  const messageType = messageTypeStore.get(priority) || obj;
-  const [state, setState] = useState(messageType.state || []);
+  const messageType = messageTypeMap.get(priority) || obj;
 
-  // if (!messageType) return null;
-
+  const prevState = messageType.state;
   const prevSetState = messageType.setState;
+
+  const [state, setState] = useState(messageType.state || []);
 
   devmode(() => {
     console.log(
-      state === messageType.state
+      prevState === state
         ? `same state (${priority})`
         : `new state (${priority})`
     );
@@ -34,9 +36,9 @@ export function useMessageType(priority, obj) {
     );
   });
 
-  messageTypeStore.set(priority, messageType);
+  messageTypeMap.set(priority, messageType);
 
-  return messageTypeStore.get(priority);
+  return messageTypeMap.get(priority);
 }
 
 export default useMessageType;
