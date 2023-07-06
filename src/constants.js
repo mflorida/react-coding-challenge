@@ -1,44 +1,47 @@
-// Use to check for #devmode url hash (to suppress console messages)
-export const devmode = () => /devmode/i.test(window.location.hash);
-
-export const messageTypes = {
-  none: {
-    type: 'none',
-    priority: 0,
-    label: 'None',
-    color: '#505050'
-  },
-  error: {
-    type: 'error',
-    priority: 1,
-    label: 'Error',
-    color: '#f56236'
-  },
-  warning: {
-    type: 'warning',
-    priority: 2,
-    label: 'Warning',
-    color: '#fce788'
-  },
-  info: {
-    type: 'info',
-    priority: 3,
-    label: 'Info',
-    color: '#88fca3'
-  },
+// Use to check for #devmode url hash to conditionally
+export const devmode = (fn) => {
+  if (/devmode/i.test(window.location.hash)) {
+    if (typeof fn === 'function') fn();
+    return true;
+  }
+  return false;
 };
 
-// Indexes line up with priority values
-export const messageTypeList = [
-  'none', // filler since there is no '0' priority
-  'error',
-  'warning',
-  'info',
-];
-
+// Dictionary map for all message types (uses priority as the key).
+// Add any new message types here to automatically be displayed in
+// the UI. The order below is the display order.
 export const messageTypeMap = new Map([
-  ['none', {}],
-  ['error', messageTypes.error],
-  ['warning', messageTypes.warning],
-  ['info', messageTypes.info],
+  [1, {
+    priority: 1,
+    type: 'error',
+    label: 'Error',
+    color: '#f56236',
+  }],
+  [2, {
+    priority: 2,
+    type: 'warning',
+    label: 'Warning',
+    color: '#fce788',
+  }],
+  [3, {
+    priority: 3,
+    type: 'info',
+    label: 'Info',
+    color: '#88fca3',
+  }],
+  // [4, {
+  //   priority: 4,
+  //   type: 'misc',
+  //   label: 'Misc.',
+  //   color: 'cornflowerblue',
+  // }],
 ]);
+
+// Array of message type objects
+export const messageTypeList = Array.from(messageTypeMap.values());
+
+// Object of message types, to easily access using priority as the key
+export const messageTypes = messageTypeList.reduce((out, obj) => ({
+  ...out,
+  [obj.priority]: obj,
+}), {});
