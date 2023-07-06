@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { devmode } from '../constants';
+import { devmode, nope } from '../constants';
 
 // Track message types to re-use
 export const messageTypeMap = new Map();
 
 // Add state management to a message type
 export function useMessageType(obj) {
-  const priority = obj.priority;
+  const priority = obj.priority ?? 0;
   const messageType = messageTypeMap.get(priority) || obj;
 
   const prevState = messageType.state;
@@ -28,6 +28,21 @@ export function useMessageType(obj) {
     ...messageType,
     state,
   });
+
+  // Add method to clear entire column (message type)
+  // ...or just a single message (by id)
+  messageType.clear = messageType.clear || ((id) => {
+    messageType.setState((messages) => (
+      id != null
+        ? messages.filter((msg) => msg.id !== id)
+        : []
+    ));
+  });
+
+  messageType.clearMessage = messageType.clearMessage || ((id) => id != null ? messageType.clear(id) : nope);
+
+  // Alias a `clearMessages()` method
+  messageType.clearMessages = messageType.clearMessages || (() => messageType.clear());
 
   devmode(() => {
     console.log(

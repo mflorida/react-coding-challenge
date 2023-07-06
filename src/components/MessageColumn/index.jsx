@@ -1,4 +1,5 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useRef } from 'react';
+import { devmode } from '../../constants';
 import MessageCard from '../MessageCard';
 import './style.css';
 
@@ -7,8 +8,13 @@ const DURATION = 100;
 
 export function MessageColumn({ messageType: obj }) {
 
-  // Is this necessary?
+  // Is this useRef() necessary?
   const messageType = useRef(obj).current;
+
+  // This one is. Maybe?
+  const colRef = useRef();
+
+  const colClass = `${messageType.type}-messages`;
 
   // Set css variables for card background and animation duration
   const style = {
@@ -16,7 +22,18 @@ export function MessageColumn({ messageType: obj }) {
     '--duration': `${DURATION}ms`,
   };
 
-  const clearColumn = () => messageType.setState([]);
+  useLayoutEffect(() => {
+    devmode(() => console.log(colRef));
+    colRef.current.classList.remove('fade-out');
+  }, [colRef]);
+
+  const clearColumn = () => {
+    colRef.current.classList.add('fade-out');
+    setTimeout(() => {
+      messageType.clearMessages();
+      colRef.current.classList.remove('fade-out');
+    }, DURATION + 20);
+  };
 
   // `e` is the event object from the clicked <button> on the card
   const clearCard = useCallback((e) => {
@@ -28,7 +45,7 @@ export function MessageColumn({ messageType: obj }) {
     const id = card.dataset.id;
     // Wait `${DURATION + 20}` ms for transition to finish
     setTimeout(() => {
-      messageType.setState(prev => prev.filter(data => data.id !== id));
+      messageType.clearMessage(id);
     }, DURATION + 20);
   }, [messageType]);
 
@@ -43,7 +60,7 @@ export function MessageColumn({ messageType: obj }) {
           </button>
         </h3>
       </header>
-      <div className={'message-cards flex-col'}>
+      <div ref={colRef} className={`${colClass} message-cards flex-col`}>
         {messageType.state.map(data => (
           <MessageCard key={data.id} id={data.id} message={data.message} clear={clearCard} />
         ))}

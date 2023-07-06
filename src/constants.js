@@ -7,6 +7,9 @@ export const devmode = (fn) => {
   return false;
 };
 
+// No-op
+export const nope = () => {};
+
 // Dictionary map for all message types (uses priority as the key).
 // Add any new message types here to automatically be displayed in
 // the UI. The order below is the display order.

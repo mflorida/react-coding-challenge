@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import MessageGenerator from '../../api-alt';
 import { devmode } from '../../constants';
+import { messageTypeMap, useMessageType } from '../../hooks/useMessageType';
 import MessageListHeader from '../MessageListHeader';
 import MessageColumn from '../MessageColumn';
-import { messageTypeMap, useMessageType } from '../../hooks/useMessageType';
 
 const messageGenerator = new MessageGenerator({});
 
@@ -32,10 +32,12 @@ export function MessageList() {
   });
 
   function clearAll() {
-    messageTypeMap.forEach(messageType => messageType.setState([]));
+    messageTypeMap.forEach(messageType => {
+      messageType.clearMessages();
+    });
   }
 
-  messageGenerator.messageCallback = (data) => {
+  messageGenerator.messageCallback = useCallback((data) => {
     devmode(() => console.log('messageCallback'));
     const priority = data.priority;
     const messageType = messageTypeMap.get(priority);
@@ -43,7 +45,7 @@ export function MessageList() {
       { ...data, type: messageType.type },
       ...prevMessages
     ]);
-  };
+  }, []);
 
   const [isStarted, setStarted] = useState(true);
 
