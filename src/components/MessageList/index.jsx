@@ -1,71 +1,82 @@
-import React, { useEffect, useState } from 'react';
-import MessageGenerator from '../../api';
-import { messageTypeList } from '../../constants';
+import React, { useCallback, useEffect, useState } from 'react';
+import MessageGenerator from '../../api-alt';
+import { devmode } from '../../constants';
+import { messageTypeMap, useMessageType } from '../../hooks/useMessageType';
 import MessageListHeader from '../MessageListHeader';
 import MessageColumn from '../MessageColumn';
 
+const messageGenerator = new MessageGenerator({});
+
 // Prefer named exports
 export function MessageList() {
-  const [errorMsgs, setErrorMsgs] = useState([]);
-  const [warningMsgs, setWarningMsgs] = useState([]);
-  const [infoMsgs, setInfoMsgs] = useState([]);
 
-  const messageSetters = [
-    () => {},
-    setErrorMsgs,
-    setWarningMsgs,
-    setInfoMsgs,
-  ];
+  const errorMessages = useMessageType({
+    priority: 1,
+    type: 'error',
+    label: 'Error',
+    color: '#f56236',
+  });
+
+  const warningMessages = useMessageType({
+    priority: 2,
+    type: 'warning',
+    label: 'Warning',
+    color: '#fce788',
+  });
+
+  const infoMessages = useMessageType({
+    priority: 3,
+    type: 'info',
+    label: 'Info',
+    color: '#88fca3',
+  });
 
   function clearAll() {
-    messageSetters.forEach(setter => setter([]))
+    messageTypeMap.forEach(messageType => {
+      messageType.clearMessages();
+    });
   }
 
-  const [messageGenerator] = useState(new MessageGenerator({
-    messageCallback: (data) => {
-      // add 'type' property
-      const message = {
-        ...data,
-        type: messageTypeList[data.priority],
-      };
+  messageGenerator.messageCallback = useCallback((data) => {
+    devmode(() => console.log('messageCallback'));
+    const priority = data.priority;
+    const messageType = messageTypeMap.get(priority);
+    messageType.setState(prevMessages => [
+      { ...data, type: messageType.type },
+      ...prevMessages
+    ]);
+  }, []);
 
-      messageSetters[data.priority](prevMessages => [
-        message,
-        ...prevMessages,
-      ]);
-    },
-  }));
-
-  const [isStarted, setStarted] = useState(messageGenerator.isStarted());
+  const [isStarted, setStarted] = useState(true);
 
   useEffect(() => {
-    messageGenerator.start();
+    if (!isStarted) {
+      messageGenerator.stop();
+      console.log('[ stopped ]');
+    } else {
+      messageGenerator.start();
+      console.log('[ running ]');
+    }
     return () => {
       messageGenerator.stop();
     };
-  }, [messageGenerator]);
+  }, [isStarted]);
 
-  const toggleStart = (e) => {
-    console.log('toggler');
-    if (isStarted) {
-      messageGenerator.stop();
-    } else {
-      messageGenerator.start();
-    }
-    setStarted(messageGenerator.isStarted());
+  const toggleStart = () => {
+    console.log('< toggle >');
+    setStarted(!messageGenerator.isStarted());
   };
 
-  const colsStyle = { width: '80%', minWidth: 900, maxWidth: 1500 };
+  const colsStyle = { width: '80%', minWidth: 800, maxWidth: 1600 };
 
   return (
     <div className={'message-list'}>
       <MessageListHeader {...{ clearAll, isStarted, toggleStart }} />
       <div className={'m-0-auto flex justify-between'} style={colsStyle}>
-        <MessageColumn type={'error'} messages={errorMsgs} update={setErrorMsgs} />
-        <MessageColumn type={'warning'} messages={warningMsgs} update={setWarningMsgs} />
-        <MessageColumn type={'info'} messages={infoMsgs} update={setInfoMsgs} />
+        <MessageColumn key={'error'} messageType={errorMessages} />
+        <MessageColumn key={'warning'} messageType={warningMessages} />
+        <MessageColumn key={'info'} messageType={infoMessages} />
       </div>
     </div>
   );
-
 }

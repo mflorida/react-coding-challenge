@@ -1,0 +1,61 @@
+@keyframes reveal {
+  0% {
+    opacity: 0;
+  }
+  // Delay animation 33% of duration time
+  33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.message-card {
+  opacity: 1;
+  margin: 6px 0;
+  padding: 12px 16px;
+  background-color: var(--card-bg-color);
+  animation: linear calc(var(--duration) * 3) reveal;
+
+  &.fade-out {
+    opacity: 0;
+    transition: opacity ease-out var(--duration);
+  }
+
+  .message-text {
+    width: 75%;
+  }
+
+  .clear-message {
+    width: 20%;
+
+    button {
+      opacity: 0.7;
+      // padding: 8px 12px;
+      width: 24px;
+      height: 24px;
+      background-color: hsla(0, 0%, 100%, 1);
+      border: 1px solid hsla(0, 0%, 0%, 0.1);
+      box-shadow: 0 0 1px hsla(0, 0%, 0%, 0.05);
+
+      span {
+        font-size: 18px;
+        color: #202020;
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+/*.error-message {*/
+/*  background-color: #f56236;*/
+/*}*/
+
+/*.warning-message {*/
+/*  background-color: #fce788;*/
+/*}*/
+
+/*.info-message {*/
+/*  background-color: #88fca3;*/
+/*}*/
