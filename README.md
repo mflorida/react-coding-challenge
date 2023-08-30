@@ -1,10 +1,10 @@
 # React Message Queue Challenge
 
----
 
 ## About the Solution
 
 The solution provided shows a few different patterns, which are used for illustrative purposes, and not necessarily optimal for a simple demo app. Any glaring issues or anti-patterns are certainly open for discussion! 🤓
+
 
 ### General
 
@@ -48,6 +48,7 @@ Modifications to the API were done to use messages that were pre-generated and s
 <br>
 
 > Instructions from original README are included below for reference.
+
 
 ## Instructions
 
