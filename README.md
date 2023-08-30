@@ -3,7 +3,7 @@
 
 ## About the Solution
 
-The solution provided shows a few different patterns, which are used for illustrative purposes, and not necessarily optimal for a simple demo app. Any glaring issues or anti-patterns are certainly open for discussion! 🤓
+The solution provided shows a few different patterns, which are used for illustrative purposes, and not necessarily optimal for a simple demo app. Any and all suggestions are certainly open for discussion! 🤓
 
 
 ### General
@@ -14,7 +14,7 @@ The `MessageGenerator` instance was created outside of the `MessageList` compone
 
 #### State management
 
-State management was kept simple by using local state for each message type (column) and adding `state` and `setState` properties to each message type object. The `state` and `setState` references were kept stable by storing them in a `Map` outside of the hook and component functions. _Using another state management method implemented with `Context`, `Redux` or `Zustand` would be yet another way to over-engineer a simple demo project._ 😉
+State management was kept simple by using local state for each message type (column) and adding `state` and `setState` properties to each message type object. The `state` and `setState` references were kept stable by storing them in a `Map` outside of the hook and component functions. _Using another state management method implemented with `Context`, `Redux` or `Zustand` would be yet another way to over-engineer a simple demo project for the sake of illustrating their use._ 😉
 
 ### Components
 
@@ -22,9 +22,9 @@ The components are separated into their own directories with an `index.jsx` file
 
 ### Styling
 
-Styling was tweaked from the original mockup for the 'clear' buttons on each message card as well as the column headers. Animations and transitions were added to help call out new messages as they appear in the lists, as well as offer feedback when clicking the clear/delete button.
+Styling was tweaked from the original mockup. The 'clear' buttons on each message card and column headers were modified for a cleaner appearance. Animations and transitions were added to help call out new messages as they appear in the lists, as well as offer feedback when clicking the clear/delete button.
 
-Styles are defined where it seems most appropriate. General styling for the entire UI is contained in the `global.css` file in the root of `src`. Component-specific styling is contained in a `css/scss` file in the component folder. For demonstration purposes in this project, a few different 'flavors' of CSS are imported to individual components:
+Styles are defined where it seems most appropriate. Style rules for general UI elements and utility classes are contained in the `global.css` file in the root of `src`. Component-specific styling is contained in a `css/scss` file in each component's folder. For demonstration purposes in this project, a few different 'flavors' of CSS are imported to individual components:
 
  - Regular `*.css` files
  - SCSS `*.scss` files (`sass` library added for parsing)
@@ -44,7 +44,6 @@ Modifications to the API were done to use messages that were pre-generated and s
  - Additional 'priority' levels can be added by initializing them with the `useMessageType` hook inside the `MessageList` component. To render, add a new `MessageColumn` component and pass a reference to the new message type variable.
 
 <br>
-<hr>
 <br>
 
 > Instructions from original README are included below for reference.
