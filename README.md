@@ -1,4 +1,4 @@
-# React Coding Challenge
+# React Message Queue Challenge
 
 ---
 
