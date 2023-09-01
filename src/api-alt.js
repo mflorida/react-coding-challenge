@@ -1,6 +1,6 @@
 import Chance from 'chance';
 import random from 'lodash.random';
-import { devmode } from './constants';
+import devmode from './hooks/useDevMode';
 import getHipsumMessage from './data/getHipsumMessage';
 
 /**

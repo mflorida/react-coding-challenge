@@ -1,4 +1,7 @@
-import { devmode } from '../constants';
+// Importing the default export from `useDevMode` without the 'use'
+// prefix prevents React from complaining that it's not a hook.
+// Same exact functionality. Different name. 🙄
+import devmode from '../hooks/useDevMode';
 import { messages } from './hipsum-data';
 
 // Get a fresh copy of messages for priority `p`
@@ -12,7 +15,7 @@ const data = {
 };
 
 export function getHipsumMessage(priority) {
-  devmode(() => console.log(`Priority ${priority} message count: ${data[priority].length}`));
+  devmode(() => console.log(`Priority ${priority} messages remaining: ${data[priority].length}`));
   return (
     data[priority].shift()
     // if everything has been shifted out, get another copy and shift the first element

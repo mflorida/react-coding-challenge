@@ -1,5 +1,5 @@
 import React, { useCallback, useLayoutEffect, useRef } from 'react';
-import { devmode } from '../../constants';
+import devmode from '../../hooks/useDevMode';
 import MessageCard from '../MessageCard';
 import './style.css';
 
@@ -23,7 +23,7 @@ export function MessageColumn({ messageType: obj }) {
   };
 
   useLayoutEffect(() => {
-    devmode(() => console.log(colRef));
+    devmode() && console.log(colRef);
     colRef.current.classList.remove('fade-out');
   }, [colRef]);
 

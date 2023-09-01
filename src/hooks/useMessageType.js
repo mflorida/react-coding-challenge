@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { devmode, nope } from '../constants';
+import { nope } from '../constants';
+import useDevMode from './useDevMode';
 
 // Track message types to re-use
 export const messageTypeMap = new Map();
@@ -14,7 +15,7 @@ export function useMessageType(obj) {
 
   const [state, setState] = useState(messageType.state || []);
 
-  devmode(() => {
+  useDevMode(() => {
     console.log(
       prevState === state
         ? `same state (${priority})`
@@ -44,7 +45,7 @@ export function useMessageType(obj) {
   // Alias a `clearMessages()` method
   messageType.clearMessages = messageType.clearMessages || (() => messageType.clear());
 
-  devmode(() => {
+  useDevMode(() => {
     console.log(
       prevSetState === messageType.setState
         ? `same setState (${priority})`

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import devmode from '../../hooks/useDevMode';
 import MessageGenerator from '../../api-alt';
-import { devmode } from '../../constants';
 import { messageTypeMap, useMessageType } from '../../hooks/useMessageType';
 import MessageListHeader from '../MessageListHeader';
 import MessageColumn from '../MessageColumn';

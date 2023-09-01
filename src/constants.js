@@ -1,12 +1,3 @@
-// Use to check for #devmode url hash to conditionally
-export const devmode = (fn) => {
-  if (/devmode/i.test(window.location.hash)) {
-    if (typeof fn === 'function') fn();
-    return true;
-  }
-  return false;
-};
-
 // No-op
 export const nope = () => {};
 
